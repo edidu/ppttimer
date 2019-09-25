@@ -68,6 +68,7 @@ resetTimer(){
   global pt_IniFile
   global textColor
   global backgroundColor
+  global pt_WarningTxt
 
   Gui, Font, c%textColor%
   gui, color, %backgroundColor%
@@ -78,6 +79,7 @@ resetTimer(){
   IniRead, pt_FinishSoundFile, %pt_IniFile%, Main, FinishSoundFile, %A_ScriptDir%\
   IniRead, pt_PlayWarningSound, %pt_IniFile%, Main, PlayWarningSound, %True%
   IniRead, pt_WarningSoundFile, %pt_IniFile%, Main, WarningSoundFile, %A_ScriptDir%\
+  IniRead, pt_WarningTxt, %pt_IniFile%, Main, WarningTxt, %A_ScriptDir%\
   IniRead, pt_Ahead, %pt_IniFile%, Main, Ahead, 120
   ;msgbox, % pt_Duration " " pt_Ahead
   GuiControl,, pt_DurationText, % FormatSeconds(pt_Duration)
@@ -176,13 +178,15 @@ CountDownTimer:
     {
       Gui, Font, c%timeoutColor%
       gui, color, %backgroundColor%
+	  GuiControl,, pt_DurationText, % FormatSeconds(pt_Duration)
     }
     else
     {
       Gui, Font, c%backgroundColor%
       gui, color, %timeoutColor%
+	  GuiControl,, pt_DurationText, %pt_WarningTxt%
     }
-    GuiControl,, pt_DurationText, % FormatSeconds(pt_Duration)
+    
   }
   else if (pt_Duration <= pt_Ahead)
   {
